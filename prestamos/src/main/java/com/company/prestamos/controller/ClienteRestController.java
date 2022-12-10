@@ -16,6 +16,7 @@ import com.company.prestamos.model.Category;
 import com.company.prestamos.model.Cliente;
 import com.company.prestamos.response.CategoryResponseRest;
 import com.company.prestamos.response.ClienteResponseRest;
+import com.company.prestamos.response.PrestamoResponseRest;
 import com.company.prestamos.services.ICategoryService;
 import com.company.prestamos.services.IClienteService;
 
@@ -54,6 +55,12 @@ import com.company.prestamos.services.IClienteService;
 		@DeleteMapping("/clientes/{id}")
 		public ResponseEntity<ClienteResponseRest> delete(@PathVariable Long id){
 			ResponseEntity<ClienteResponseRest> response = service.deleteById(id);
+			return response;
+		}
+		
+		@GetMapping("/clientes/filter/{nombre}")
+		public ResponseEntity<ClienteResponseRest> searchByName(@PathVariable String nombre){
+			ResponseEntity<ClienteResponseRest> response = service.searchByNombre(nombre);
 			return response;
 		}
 

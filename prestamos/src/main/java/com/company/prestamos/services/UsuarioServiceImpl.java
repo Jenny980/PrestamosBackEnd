@@ -62,4 +62,34 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return new ResponseEntity<UsuarioResponseRest>(response, HttpStatus.OK);
 	}
 
+	@Override
+	public ResponseEntity<UsuarioResponseRest> searchByEmail(String email) {
+		UsuarioResponseRest response = new UsuarioResponseRest();
+		List<Usuario> list = new ArrayList<>();
+		List<Usuario> listAux = new ArrayList<>();
+		try {
+			
+			listAux = usuarioDao.findByemailContainingIgnoreCase(email);
+			
+			if(listAux.size() > 0) {
+				
+				listAux.stream().forEach((p) -> {
+					list.add(p);
+				});
+				
+				response.getUsuarioResponse().setUsuario(list);
+				response.setMetadata("Respuesta ok", "00", "Usuario encontrado");
+			} else {
+				response.setMetadata("Respuesta nook", "-1", "Usuario no encontrado");
+				return new ResponseEntity<UsuarioResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			response.setMetadata("Respuesta nook", "-1", "Error al buscar por email");
+			e.getStackTrace();
+			return new ResponseEntity<UsuarioResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<UsuarioResponseRest>(response, HttpStatus.OK);
+	}
+
 }

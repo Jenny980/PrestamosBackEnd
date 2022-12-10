@@ -14,8 +14,10 @@ import org.springframework.stereotype.Service;
 import com.company.prestamos.dao.IClienteDao;
 import com.company.prestamos.model.Category;
 import com.company.prestamos.model.Cliente;
+import com.company.prestamos.model.Prestamo;
 import com.company.prestamos.response.CategoryResponseRest;
 import com.company.prestamos.response.ClienteResponseRest;
+import com.company.prestamos.response.PrestamoResponseRest;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
@@ -136,6 +138,36 @@ public class ClienteServiceImpl implements IClienteService{
 			response.setMetadata("Respuesta ok", "00", "Cliente eliminado");
 		} catch (Exception e) {
 			response.setMetadata("Respuesta nook", "-1", "Error al eliminar");
+			e.getStackTrace();
+			return new ResponseEntity<ClienteResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<ClienteResponseRest>(response, HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<ClienteResponseRest> searchByNombre(String nombre) {
+		ClienteResponseRest response = new ClienteResponseRest();
+		List<Cliente> list = new ArrayList<>();
+		List<Cliente> listAux = new ArrayList<>();
+		try {
+			
+			listAux = clienteDao.findBynombreContainingIgnoreCase(nombre);
+			
+			if(listAux.size() > 0) {
+				
+				listAux.stream().forEach((p) -> {
+					list.add(p);
+				});
+				
+				response.getClienteResponse().setCliente(list);
+				response.setMetadata("Respuesta ok", "00", "Cliente encontrado");
+			} else {
+				response.setMetadata("Respuesta nook", "-1", "Cliente no encontrado");
+				return new ResponseEntity<ClienteResponseRest>(response, HttpStatus.NOT_FOUND);
+			}
+		} catch (Exception e) {
+			response.setMetadata("Respuesta nook", "-1", "Error al buscar por nombre");
 			e.getStackTrace();
 			return new ResponseEntity<ClienteResponseRest>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 			
