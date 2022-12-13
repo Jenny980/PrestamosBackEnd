@@ -186,6 +186,7 @@ public class PrestamoServiceImpl implements IPrestamoService{
 				prestamoSearch.get().setValorCuota(prestamo.getValorCuota());
 				prestamoSearch.get().setDebe(prestamo.getDebe());
 				prestamoSearch.get().setCliente(prestamo.getCliente());
+				prestamoSearch.get().setEstado(prestamo.getEstado());
 				
 				Prestamo prestamoToUpdate = prestamoDao.save(prestamoSearch.get());
 				

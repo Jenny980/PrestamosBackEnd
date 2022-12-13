@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.company.prestamos.model.Cliente;
 import com.company.prestamos.model.Usuario;
 import com.company.prestamos.response.ClienteResponseRest;
+import com.company.prestamos.response.PrestamoResponseRest;
 import com.company.prestamos.response.UsuarioResponseRest;
 import com.company.prestamos.services.IUsuarioService;
 
@@ -39,6 +41,18 @@ public class UsuarioRestController {
 	@GetMapping("/usuarios/filter/{email}")
 	public ResponseEntity<UsuarioResponseRest> searchByEmail(@PathVariable String email){
 		ResponseEntity<UsuarioResponseRest> response = service.searchByEmail(email);
+		return response;
+	}
+	
+	@GetMapping("/usuarios/{id}")
+	public ResponseEntity<UsuarioResponseRest> searchById(@PathVariable Long id){
+		ResponseEntity<UsuarioResponseRest> response = service.searchById(id);
+		return response;
+	}
+	
+	@PutMapping("/usuarios/{id}")
+	public ResponseEntity<UsuarioResponseRest> update(@RequestBody Usuario usuario, @PathVariable Long id){
+		ResponseEntity<UsuarioResponseRest> response = service.update(usuario, id);
 		return response;
 	}
 

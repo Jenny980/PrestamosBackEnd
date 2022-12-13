@@ -39,7 +39,7 @@ public class Prestamo implements Serializable{
 	private long valorCuota;
 	private long debe;
 	private long porcentaje;
-	private boolean estado;
+	private String estado;
 	private LocalDate fecha;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})

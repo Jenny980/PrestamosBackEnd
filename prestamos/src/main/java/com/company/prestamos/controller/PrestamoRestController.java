@@ -47,7 +47,7 @@ public class PrestamoRestController {
 			@RequestParam("valorCuota") int valorCuota,
 			@RequestParam("debe") int debe,
 			@RequestParam("porcentaje") int porcentaje,
-			@RequestParam("estado") Boolean estado,
+			@RequestParam("estado") String estado,
 			@RequestParam("clienteId") Long clienteID) throws IOException
 	{
 		Prestamo prestamo = new Prestamo();
@@ -95,7 +95,7 @@ public class PrestamoRestController {
 			@RequestParam("valorCuota") int valorCuota,
 			@RequestParam("debe") int debe,
 			@RequestParam("porcentaje") int porcentaje,
-			@RequestParam("estado") Boolean estado,
+			@RequestParam("estado") String estado,
 			@RequestParam("clienteId") Long clienteID,
 			@PathVariable Long id) throws IOException
 	{
